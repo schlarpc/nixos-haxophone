@@ -30,6 +30,7 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
+        lib = nixpkgs.lib;
         overlays = [ (import rust-overlay) ];
         pkgs = import "${nixpkgs}" {
           inherit system overlays;
@@ -64,6 +65,11 @@
           ];
           # tests require hardware access
           doCheck = false;
+          meta = {
+            license = lib.licenses.mit;
+            mainProgram = (builtins.fromTOML (builtins.readFile "${haxo-rs}/Cargo.toml")).package.name;
+            homepage = "https://github.com/cardonabits/haxo-rs";
+          };
         });
 
         nixosConfigurations = {
