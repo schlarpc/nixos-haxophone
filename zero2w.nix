@@ -109,6 +109,13 @@ in
   # NTP time sync.
   services.timesyncd.enable = true;
 
+  services.journald = {
+    storage = "volatile";
+    extraConfig = ''
+      RuntimeMaxUse=20M
+    '';
+  };
+
   # ! Change the following configuration
   users.users.${defaultUser} = {
     isNormalUser = true;
