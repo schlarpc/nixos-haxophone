@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  defaultUser = "haxophone";
+in
 {
   imports = [
     ./sd-image.nix
@@ -107,10 +110,9 @@
   services.timesyncd.enable = true;
 
   # ! Change the following configuration
-  users.users.bob = {
+  users.users.${defaultUser} = {
     isNormalUser = true;
-    home = "/home/bob";
-    description = "Bob";
+    home = "/home/${defaultUser}";
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -124,5 +126,5 @@
     wheelNeedsPassword = false;
   };
   # ! Be sure to change the autologinUser.
-  services.getty.autologinUser = "bob";
+  services.getty.autologinUser = defaultUser;
 }
